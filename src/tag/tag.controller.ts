@@ -1,35 +1,20 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { CreateTagDto } from './dto/create-tag.dto.js';
 import { UpdateTagDto } from './dto/update-tag.dto.js';
+import { Tag, TagService } from './tag.service.js';
 
 @Controller('tag')
 export class TagController {
+  constructor(private readonly tagService: TagService) {}
+
   @Get()
-  getTags() {
-    return [
-      {
-        tag_id: 1,
-        name: 'Design',
-        color: 'red',
-        is_common: true,
-      },
-      {
-        tag_id: 2,
-        name: 'Frontend',
-        color: 'blue',
-        is_common: true,
-      },
-    ];
+  getTags(): Tag[] {
+    return this.tagService.findAllTags();
   }
 
   @Get(':id')
   getTagById(@Param('id') id: string) {
-    return {
-      tag_id: id,
-      name: 'Design',
-      color: 'red',
-      is_common: true,
-    };
+    return this.tagService.findTagById(id);
   }
 
   @Post()
