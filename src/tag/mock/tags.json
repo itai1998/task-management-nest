@@ -1,0 +1,14 @@
+[
+  {
+    "tag_id": "1",
+    "name": "Design",
+    "color": "green",
+    "is_common": false
+  },
+  {
+    "tag_id": "2",
+    "name": "Frontend",
+    "color": "blue",
+    "is_common": true
+  }
+]

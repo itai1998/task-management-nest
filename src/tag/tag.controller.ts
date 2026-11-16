@@ -1,6 +1,13 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { CreateTagDto } from './dto/create-tag.dto.js';
-import { UpdateTagDto } from './dto/update-tag.dto.js';
 import { Tag, TagService } from './tag.service.js';
 
 @Controller('tag')
@@ -19,11 +26,19 @@ export class TagController {
 
   @Post()
   createTag(@Body() createTagDto: CreateTagDto) {
-    return { data: createTagDto, message: 'Tag created successfully' };
+    return this.tagService.createTag(createTagDto);
   }
 
   @Put(':id')
-  updateTag(@Param('id') id: string, @Body() updateTagDto: UpdateTagDto) {
-    return { data: id, ...updateTagDto, message: 'Tag updated successfully' };
+  updateTag(
+    @Param('id') id: string,
+    @Body() createTagDto: CreateTagDto,
+  ): Tag | { message: string } {
+    return this.tagService.updateTag(id, createTagDto);
+  }
+
+  @Delete(':id')
+  deleteTag(@Param('id') id: string): { message: string } {
+    return this.tagService.deleteTag(id);
   }
 }
