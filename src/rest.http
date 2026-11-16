@@ -1,6 +1,6 @@
 GET http://localhost:3000/tag
 
-GET http://localhost:3000/tag/10
+GET http://localhost:3000/tag/1
 
 POST http://localhost:3000/tag
 Content-Type: application/json
@@ -20,7 +20,7 @@ Content-Type: application/json
   "is_common": false
 }
 
-DELETE http://localhost:3000/tag/1794839420011
+DELETE http://localhost:3000/tag/1794839438620
 
 
 
