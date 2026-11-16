@@ -2,13 +2,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTagDto } from './dto/create-tag.dto.js';
-
-export interface Tag {
-  tag_id: string;
-  name: string;
-  color: string;
-  is_common: boolean;
-}
+import type { Tag } from './interfaces/tag.interface.js';
 
 @Injectable()
 export class TagService {
