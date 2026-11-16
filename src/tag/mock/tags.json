@@ -10,5 +10,11 @@
     "name": "Frontend",
     "color": "blue",
     "is_common": true
+  },
+  {
+    "tag_id": "1794839438620",
+    "name": "Design",
+    "color": "red",
+    "is_common": true
   }
 ]

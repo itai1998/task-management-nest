@@ -22,15 +22,15 @@ export class TagService {
     return this.tags;
   }
 
-  findTagById(id: string): Tag | { message: string } {
+  findTagById(id: string) {
     const tag = this.tags.find((tag) => tag.tag_id === id);
     if (!tag) {
-      return { message: 'Tag not found' };
+      throw new NotFoundException(`Tag with id '${id}' not found`);
     }
     return tag;
   }
 
-  createTag(createTagDto: CreateTagDto): Tag {
+  createTag(createTagDto: CreateTagDto) {
     const tag: Tag = {
       tag_id: String(Date.now()),
       ...createTagDto,
@@ -40,7 +40,7 @@ export class TagService {
     return tag;
   }
 
-  updateTag(id: string, createTagDto: CreateTagDto): Tag {
+  updateTag(id: string, createTagDto: CreateTagDto) {
     const index = this.tags.findIndex((tag) => tag.tag_id === id);
     if (index === -1) {
       throw new NotFoundException(`Tag with id "${id}" not found`);
@@ -55,7 +55,7 @@ export class TagService {
     return updatedTag;
   }
 
-  deleteTag(id: string): { message: string } {
+  deleteTag(id: string) {
     const index = this.tags.findIndex((tag) => tag.tag_id === id);
     if (index === -1) {
       throw new NotFoundException(`Tag with id "${id}" not found`);
