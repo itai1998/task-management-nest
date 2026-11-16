@@ -16,5 +16,11 @@
     "name": "Test",
     "color": "red",
     "is_common": true
+  },
+  {
+    "tag_id": "1794840798049",
+    "name": "Test",
+    "color": "black",
+    "is_common": true
   }
 ]
