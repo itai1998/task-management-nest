@@ -6,21 +6,21 @@ POST http://localhost:3000/tag
 Content-Type: application/json
 
 {
-  "name": "Test",
+  "name": "Test3",
   "color": "black",
   "is_common": true
 }
 
-PUT http://localhost:3000/tag/1
+PUT http://localhost:3000/tag/3
 Content-Type: application/json
 
 {
-  "name": "Design",
+  "name": "Test 2 Updated",
   "color": "green",
   "is_common": false
 }
 
-DELETE http://localhost:3000/tag/1794840484413
+DELETE http://localhost:3000/tag/3
 
 
 
