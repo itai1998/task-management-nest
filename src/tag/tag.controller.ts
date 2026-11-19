@@ -8,7 +8,6 @@ import {
   Put,
 } from '@nestjs/common';
 import { CreateTagDto } from './dto/create-tag.dto.js';
-import type { Tag } from './interfaces/tag.interface.js';
 import { TagService } from './tag.service.js';
 
 @Controller('tag')
@@ -16,7 +15,7 @@ export class TagController {
   constructor(private readonly tagService: TagService) {}
 
   @Get()
-  getTags(): Tag[] {
+  getTags() {
     return this.tagService.findAllTags();
   }
 
@@ -31,15 +30,12 @@ export class TagController {
   }
 
   @Put(':id')
-  updateTag(
-    @Param('id') id: string,
-    @Body() createTagDto: CreateTagDto,
-  ): Tag | { message: string } {
+  updateTag(@Param('id') id: string, @Body() createTagDto: CreateTagDto) {
     return this.tagService.updateTag(id, createTagDto);
   }
 
   @Delete(':id')
-  deleteTag(@Param('id') id: string): { message: string } {
+  deleteTag(@Param('id') id: string) {
     return this.tagService.deleteTag(id);
   }
 }

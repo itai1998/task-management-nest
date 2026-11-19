@@ -1,67 +1,42 @@
-import { readFileSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateTagDto } from './dto/create-tag.dto.js';
-import type { Tag } from './interfaces/tag.interface.js';
+import { Tag } from './entities/tag.entity.js';
 
 @Injectable()
 export class TagService {
-  // TODO: use a database instead of a file
-  private readonly tagsFilePath = join(
-    process.cwd(),
-    'src',
-    'tag',
-    'mock',
-    'tags.json',
-  );
-  private tags: Tag[] = JSON.parse(
-    readFileSync(this.tagsFilePath, 'utf-8'),
-  ) as Tag[];
+  constructor(
+    @InjectRepository(Tag)
+    private readonly tagRepository: Repository<Tag>,
+  ) {}
 
-  findAllTags(): Tag[] {
-    return this.tags;
+  findAllTags(): Promise<Tag[]> {
+    return this.tagRepository.find();
   }
 
-  findTagById(id: string) {
-    const tag = this.tags.find((tag) => tag.tag_id === id);
+  async findTagById(id: string): Promise<Tag> {
+    const tag = await this.tagRepository.findOneBy({ tag_id: id });
     if (!tag) {
       throw new NotFoundException(`Tag with id '${id}' not found`);
     }
     return tag;
   }
 
-  createTag(createTagDto: CreateTagDto) {
-    const tag: Tag = {
-      tag_id: String(Date.now()),
-      ...createTagDto,
-    };
-    this.tags.push(tag);
-    writeFileSync(this.tagsFilePath, JSON.stringify(this.tags, null, 2));
-    return tag;
+  createTag(createTagDto: CreateTagDto): Promise<Tag> {
+    return this.tagRepository.save(this.tagRepository.create(createTagDto));
   }
 
-  updateTag(id: string, createTagDto: CreateTagDto) {
-    const index = this.tags.findIndex((tag) => tag.tag_id === id);
-    if (index === -1) {
-      throw new NotFoundException(`Tag with id "${id}" not found`);
-    }
-
-    const updatedTag: Tag = {
-      tag_id: id,
-      ...createTagDto,
-    };
-    this.tags[index] = updatedTag;
-    writeFileSync(this.tagsFilePath, JSON.stringify(this.tags, null, 2));
-    return updatedTag;
+  async updateTag(id: string, createTagDto: CreateTagDto): Promise<Tag> {
+    const tag = await this.findTagById(id);
+    return this.tagRepository.save(Object.assign(tag, createTagDto));
   }
 
-  deleteTag(id: string) {
-    const index = this.tags.findIndex((tag) => tag.tag_id === id);
-    if (index === -1) {
+  async deleteTag(id: string) {
+    const result = await this.tagRepository.delete({ tag_id: id });
+    if (!result.affected) {
       throw new NotFoundException(`Tag with id "${id}" not found`);
     }
-    this.tags.splice(index, 1);
-    writeFileSync(this.tagsFilePath, JSON.stringify(this.tags, null, 2));
     return { message: 'Tag deleted successfully' };
   }
 }
