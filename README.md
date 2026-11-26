@@ -44,6 +44,15 @@ $ pnpm run start:dev
 $ pnpm run start:prod
 ```
 
+## API documentation
+
+Set `SWAGGER_ENABLED=true` in `.env` and start the app:
+
+- Swagger UI: <http://localhost:3000/docs>
+- OpenAPI JSON: <http://localhost:3000/docs-json>
+
+The docs are off unless that variable is `true`. They have no authentication, so leave it unset on public deployments.
+
 ## Run tests
 
 ```bash
