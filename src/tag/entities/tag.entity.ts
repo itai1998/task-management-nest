@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { ApiHideProperty } from '@nestjs/swagger';
+import { Column, Entity, ManyToMany, PrimaryColumn } from 'typeorm';
+import { Task } from '../../task/entities/task.entity.js';
 
 @Entity('tag')
 export class Tag {
@@ -33,4 +35,9 @@ export class Tag {
    */
   @Column({ type: 'boolean' })
   is_common: boolean;
+
+  // Only present when a query asks for the relation, so it is not documented.
+  @ApiHideProperty()
+  @ManyToMany(() => Task, (task) => task.tags)
+  tasks?: Task[];
 }

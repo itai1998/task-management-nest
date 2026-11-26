@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import { TagModule } from './tag/tag.module.js';
+import { TaskModule } from './task/task.module.js';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { TagModule } from './tag/tag.module.js';
       }),
     }),
     TagModule,
+    TaskModule,
   ],
   controllers: [AppController],
   providers: [AppService],
