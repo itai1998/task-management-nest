@@ -22,6 +22,41 @@ Content-Type: application/json
 
 DELETE http://localhost:3000/tag/3
 
+###
+
+GET http://localhost:3000/task
+
+###
+
+GET http://localhost:3000/task/1
+
+###
+
+POST http://localhost:3000/task
+Content-Type: application/json
+
+{
+  "title": "Try the task API",
+  "tag_ids": ["5", "6"],
+  "creator": "alice",
+  "due_date": "2026-12-20"
+}
+
+### Replace 4 below with the task_id returned by POST
+
+PATCH http://localhost:3000/task/4
+Content-Type: application/json
+
+{
+  "status": 1,
+  "tag_ids": ["7"],
+  "last_editor": "bob"
+}
+
+###
+
+DELETE http://localhost:3000/task/4
+
 
 
 
